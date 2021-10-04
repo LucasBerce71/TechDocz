@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 
 import { RiGithubFill } from 'react-icons/ri';
 
@@ -11,15 +11,22 @@ type HeaderProps = {
 }
 
 export const Header: React.FC<HeaderProps> = ({ title }) => {    
+    const [tec, setTec] = useState('');
+
     return (
         <HeaderContainer>
             <HeaderTitle>
-                {title || 'TechDocz'}
+                {tec.length <= 20 && tec.length > 0 
+                    ? tec
+                    : title
+                }
             </HeaderTitle>
 
             <Input 
                 label="Filtre por tecnologias" 
                 placeholder="Ex. Typescript" 
+                value={tec}
+                onChange={(e: any) => setTec(e.target.value)}
             />
 
             <HeaderIconContainer>

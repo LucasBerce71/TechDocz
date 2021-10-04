@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface IButtonSubmitProps {
+    showDisplay: boolean;
+}
+
 export const InputContainer = styled.div`
     display: flex;
     align-items: center;
@@ -21,7 +25,7 @@ export const InputContent = styled.input`
     font-size: 25px;
 `;
 
-export const ButtonSubmit = styled.button`
+export const ButtonSubmit = styled.button<IButtonSubmitProps>`
     height: 35px;
     margin-left: 10px;
     border: 0;
@@ -31,5 +35,12 @@ export const ButtonSubmit = styled.button`
     color: ${({ theme }) => theme.colors.light};
     background: ${({ theme }) => theme.colors.darkBlue};
     font-weight: bold;
+    display: ${({ showDisplay }) => !showDisplay && 'none'};
     cursor: pointer;
+
+    &:hover {
+        opacity: .5;
+    }
+
+    transition: all 1s;
 `;
