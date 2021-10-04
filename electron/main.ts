@@ -10,7 +10,9 @@ function createWindow () {
     // icon: path.join(assetsPath, 'assets', 'icon.png'),
     width: 1100,
     height: 700,
-    backgroundColor: '#191622',
+    backgroundColor: '#303052',
+    autoHideMenuBar: true,
+    darkTheme: true,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
