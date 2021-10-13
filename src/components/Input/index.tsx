@@ -1,30 +1,36 @@
-import React, { useCallback, useState } from 'react';
-import { ButtonSubmit, InputContainer, InputContent, InputLabel } from './styles';
+import React from 'react'
+import { useCurrentUri } from '../../hooks/useCurrentUri'
+import { ButtonSubmit, InputContainer, InputContent } from './styles'
 
 type InputProps = {
-    label: string;
-    placeholder: string;
-    value: string;
-    onChange: any;
+  placeholder: string
+  value: string
+  onChange: any
 }
 
-type tecsAvailable = 'react navigation';
+export const Input: React.FC<InputProps> = ({
+  placeholder,
+  value,
+  onChange
+}) => {
+  const { handleChangeCurrentUri } = useCurrentUri()
 
-export const Input: React.FC<InputProps> = ({ label, placeholder, value, onChange }) => {
-    return (
-        <InputContainer>
-            <InputLabel>
-                {label}
-            </InputLabel>
+  return (
+    <InputContainer>
+      <InputContent
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
 
-            <InputContent 
-                placeholder={placeholder} 
-                onChange={onChange}
-            />
-
-            <ButtonSubmit showDisplay={!!value}>
-                Pesquisar
-            </ButtonSubmit>
-        </InputContainer>
-    );
+      <ButtonSubmit
+        showDisplay={!!value}
+        onClick={() => {
+          handleChangeCurrentUri()
+        }}
+      >
+        Pesquisar
+      </ButtonSubmit>
+    </InputContainer>
+  )
 }

@@ -1,40 +1,64 @@
-import React, { useState } from 'react';
+import React from 'react'
 
-import { RiGithubFill } from 'react-icons/ri';
+import { RiGithubFill } from 'react-icons/ri'
+import { useCurrentUri } from '../../hooks/useCurrentUri'
 
-import { Input } from '../Input';
+import { Input } from '../Input'
+import { Picture } from '../Picture'
 
-import { HeaderContainer, HeaderIconContainer, HeaderIconLabel, HeaderTitle } from './styles';
+import {
+  HeaderContainer,
+  HeaderIconContainer,
+  HeaderIconLabel,
+  HeaderTitle,
+  HeaderWrapper
+} from './styles'
 
 type HeaderProps = {
-    title: string;
+  title?: string
 }
 
-export const Header: React.FC<HeaderProps> = ({ title }) => {    
-    const [tec, setTec] = useState('');
+export const Header: React.FC<HeaderProps> = () => {
+  const {
+    tech,
+    techIcon,
+    handleChangeCurrentTech,
+    handleChangeCurrentUri,
+    handleChangeCurrentTechIcon
+  } = useCurrentUri()
 
-    return (
-        <HeaderContainer>
-            <HeaderTitle>
-                {tec.length <= 20 && tec.length > 0 
-                    ? tec
-                    : title
-                }
-            </HeaderTitle>
+  return (
+    <HeaderContainer>
+      <HeaderWrapper>
+        {techIcon && tech.length > 0 && <Picture path={techIcon} />}
 
-            <Input 
-                label="Filtre por tecnologias" 
-                placeholder="Ex. Typescript" 
-                value={tec}
-                onChange={(e: any) => setTec(e.target.value)}
-            />
+        <HeaderTitle>
+          {tech.length <= 20 && tech.length > 0 && tech !== 'repository'
+            ? tech
+            : 'TechDocz'}
+        </HeaderTitle>
+      </HeaderWrapper>
 
-            <HeaderIconContainer>
-                <RiGithubFill size={45} />
-                <HeaderIconLabel>
-                    Visitar repositório do projeto
-                </HeaderIconLabel>
-            </HeaderIconContainer>
-        </HeaderContainer>
-    );
-};
+      <Input
+        placeholder="Ex. Typescript"
+        value={tech === 'repository' ? '' : tech}
+        onChange={(e: any) => {
+          handleChangeCurrentTech(e.target.value)
+          if (e.target.value === '') handleChangeCurrentTechIcon('')
+        }}
+      />
+
+      <HeaderIconContainer>
+        <RiGithubFill size={45} />
+        <HeaderIconLabel
+          onClick={() => {
+            handleChangeCurrentTech('repository')
+            handleChangeCurrentUri()
+          }}
+        >
+          Visitar repositório do projeto
+        </HeaderIconLabel>
+      </HeaderIconContainer>
+    </HeaderContainer>
+  )
+}
